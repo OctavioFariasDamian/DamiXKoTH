@@ -41,7 +41,7 @@ public class SetSecondPositionKoTHCommand implements KoTHSubCommand{
             sendMessage(sender,DamiXKoTH.getMessages().getMessage("commands.setsecondposition.started").replace("%name%", name));
             return;
         }
-        Block targetBlock = ((Player) sender).getTargetBlock(null, 5);
+        Block targetBlock = ((Player) sender).getTargetBlockExact(5);
         if(!targetBlock.isCollidable()){
             sendMessage(sender,DamiXKoTH.getMessages().getMessage("commands.setsecondposition.not-solid-block"));
             return;
