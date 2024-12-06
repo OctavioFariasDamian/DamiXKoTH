@@ -1,0 +1,93 @@
+no-permission: "&cYou don't have permission!"
+
+koth:
+  no-one-dominating:
+    - "<underline:a"
+    - "<center> &fNo one is dominating the koth &a%koth%"
+    - "<center> &fIt's your opportunity!"
+    - "<underline:a"
+  now-dominating:
+    - "<underline:d"
+    - "<center> &fNow the koth &d%koth% &fis getting dominated"
+    - "<center> &fby &e%player%&f!"
+    - "<underline:a"
+  finish-with-winner:
+    - "<underline:e"
+    - "<center> &fThe koth &e%koth% &ffinish with a winner!"
+    - "<center> &fThe winner is &a&l%player%&f, congratulations!"
+    - "<underline:e"
+  finish-without-winner:
+    - "<underline:c"
+    - "<center> &fThe koth &c%koth% &ffinish without a winner!"
+    - "<underline:c"
+  stopped:
+    - "<underline:#ff0000"
+    - "<center> &fThe koth #ff0000%koth% &fwas forced to stop!"
+    - "<underline:#ff0000"
+commands:
+  help:
+    - "&a&lDamiXKoTH Help"
+    - ""
+    - "&c/koth create <name> &f- &7Create a new koth"
+    - "&c/koth remove <name> &f- &7Delete a existing koth"
+    - "&c/koth setcapturetime <koth> <seconds> &f- &7Set koth's capture time"
+    - "&c/koth setfirstposition <koth> &f- &7Set the first point of the capturing koth"
+    - "&c/koth setsecondposition <koth> &f- &7Set the second point of the capturing koth"
+    - "&c/koth start <koth> <activeTime> &f- &7Start the koth for selected seconds"
+    - "&c/koth rewards <koth> items|commands &f- &7Set the items and commands rewards for a koth"
+    - "&c/koth stop <koth> &f- &7Stops an active koth"
+  only-players: "&cOnly players can execute this."
+  unknown-koth: "&cThat koth doesn't exists."
+  invalid-number: "&cThe command requires a valid number."
+  unknown-subcommand: "&cUnknown command, use /koth help to check commands list."
+  create:
+    usage: "&cThe usage of the command is: /koth create <name>"
+    invalid-name: "&cThe name %nam% has to be alphanumeric!"
+    already-exists: "&cA koth with that name already exists!"
+    error: "&cAn Exception occurred while creating koth. Check console for more information."
+    successfully: "&fYou create the koth &e%name%&f."
+  remove:
+    usage: "&cThe usage of the command is: /koth remove <name>"
+    started: "&cThe koth %name% is started, you can't remove it!"
+    successfully: "&fYou remove the koth &c%name%&f."
+  setcapturetime:
+    usage: "&cThe usage of the command is: /koth setcapturetime <koth> <seconds>"
+    successfully: "&fYou set the capture time of the koth &e%name% &fto &a%time%&f seconds."
+  setfirstposition:
+    usage: "&cThe usage of the command is: /koth setfirstposition <koth>"
+    started: "&cThe koth %name% is started, you can't change the first point while it is!"
+    not-solid-block: "&cYou have to target a solid block!"
+    successfully: "&fYou set the first point of the koth &e%name% &fto: &a%x%&f, &a%y%&f, &a%z%&f in the world &6%world%&f."
+  setsecondposition:
+    usage: "&cThe usage of the command is: /koth setsecondposition <koth>"
+    started: "&cThe koth %name% is started, you can't change the second point while it is!"
+    not-solid-block: "&cYou have to target a solid block!"
+    successfully: "&fYou set the second point of the koth &e%name% &fto: &a%x%&f, &a%y%&f, &a%z%&f in the world &6%world%&f."
+  start:
+    usage: "&cThe usage of the command is: /koth start <koth> <activeTime>"
+    error1: "&cThat koth can't start, the first point is not defined!"
+    error2: "&cThat koth can't start, the second point is not defined!"
+    error3: "&cThere are not rewards defined in that koth, it can't start!"
+    error4: "&cThe capture time on that koth has to be greater than 0!"
+    successfully: "&fYou start the koth &a%name% &ffor &e%time%&f seconds."
+  rewards:
+    usage: "&cThe usage of the command is: /koth rewards items|commands"
+    started: "&cYou can't edit rewards of an active koth!"
+    usage1: "&cThe usage of the subcommand is: /koth rewards command <add|list|remove> [command line|id]"
+    commands:
+      empty: "&cThat koth don't have any commands as rewards yet!"
+      list:
+        header: "&a&l%name%'s items reward list:"
+        each: "&a#%id%&f - &7%command%"
+      add:
+        usage: "&cThe usage of the subcommand is: /koth rewards commands add <command line>"
+        successfully: "&fYou add the command &e%command%&f with id &a#%id%&f."
+      remove:
+        usage: "&cThe usage of the subcommand is: /koth rewards commands remove <id>"
+        out-of-index: "&cThat ID is out of indexes in list of commands reward in that koth."
+        successfully: "&fYou remove the command &e%command%&f with id &a#%id%&f."
+    items-updated: "&fYou update the items reward of koth &e%koth%&f."
+  stop:
+    usage: "&cThe usage of the command is: /koth stop <koth>"
+    not-started: "&cThat koth is not started yet!"
+    successfully: "&fYou stop the koth &a%name%&f."

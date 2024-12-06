@@ -1,0 +1,15 @@
+name: DamiXKoTH
+version: '1.0'
+main: ar.com.octaviofarias.koth.DamiXKoTH
+api-version: '1.21'
+authors: [ DamianFarias ]
+description: An easy and feature King of The Hill Minecraft Plugin
+website: https://octaviofarias.com.ar
+commands:
+  koth:
+    aliases:
+      - koths
+      - kingofthehill
+      - damixkoth
+      - damixkoths
+    description: "Main DamiXKoth's Command"
