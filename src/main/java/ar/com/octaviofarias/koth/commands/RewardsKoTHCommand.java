@@ -57,6 +57,7 @@ public class RewardsKoTHCommand implements KoTHSubCommand{
                 return;
             }
             new RewardsMenu(koth).open((Player) sender);
+            getEditingItemsReward().put((Player) sender, koth);
         }else if(args[1].equalsIgnoreCase("commands")){
             if(args.length == 2){
                 sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.rewards.usage1"));
@@ -146,7 +147,7 @@ public class RewardsKoTHCommand implements KoTHSubCommand{
     public static class RewardsMenu extends Menu {
 
         protected RewardsMenu(KoTH koth) {
-            super(DamiXKoTH.getSettings().getSetting("menus.rewards.title"), Integer.parseInt(DamiXKoTH.getSettings().getSetting("menus.rewards.rows")) / 9);
+            super(DamiXKoTH.getSettings().getSetting("menus.rewards.title").replace("%name%", koth.getName()), Integer.parseInt(DamiXKoTH.getSettings().getSetting("menus.rewards.rows")) * 9);
 
             int i = 0;
             for (ItemStack item : koth.getRewards().getItems()) {

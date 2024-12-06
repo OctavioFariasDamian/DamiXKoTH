@@ -74,7 +74,7 @@ public class KoTHListener implements Listener {
     @EventHandler
     public void onClose(InventoryCloseEvent e){
         Player p = (Player) e.getPlayer();
-        if(e.getInventory().getHolder() instanceof RewardsKoTHCommand.RewardsMenu menu){
+        if(e.getInventory().getHolder() instanceof RewardsKoTHCommand.RewardsMenu){
             KoTH koTH = RewardsKoTHCommand.getEditingItemsReward().get(p);
             if(koTH == null) return;
 
