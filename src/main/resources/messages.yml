@@ -10,7 +10,7 @@ koth:
     - "<underline:d"
     - "<center> &fNow the koth &d%koth% &fis getting dominated"
     - "<center> &fby &e%player%&f!"
-    - "<underline:a"
+    - "<underline:d"
   finish-with-winner:
     - "<underline:e"
     - "<center> &fThe koth &e%koth% &ffinish with a winner!"

@@ -147,7 +147,7 @@ public class RewardsKoTHCommand implements KoTHSubCommand{
     public static class RewardsMenu extends Menu {
 
         protected RewardsMenu(KoTH koth) {
-            super(DamiXKoTH.getSettings().getSetting("menus.rewards.title").replace("%name%", koth.getName()), Integer.parseInt(DamiXKoTH.getSettings().getSetting("menus.rewards.rows")) * 9);
+            super(DamiXKoTH.getSettings().getSetting("menus.rewards.title").replace("%name%", koth.getName()), Integer.parseInt(DamiXKoTH.getSettings().getSetting("menus.rewards.rows")));
 
             int i = 0;
             for (ItemStack item : koth.getRewards().getItems()) {
