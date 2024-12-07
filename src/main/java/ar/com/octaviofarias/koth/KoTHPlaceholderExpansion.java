@@ -35,7 +35,7 @@ public class KoTHPlaceholderExpansion extends PlaceholderExpansion {
             }
 
             ret = new StringBuilder(ret.toString().trim());
-            return ret.substring(0, ret.length()-1);
+            return ret.isEmpty() ? "" : ret.substring(0, ret.length()-1);
         }
         else if(params.toLowerCase().startsWith("active_time_")){
             String name = params.replace("active_time_", "");
