@@ -37,7 +37,6 @@ public class ActiveKoTH {
         reamingTime = activeTime;
         this.dominatingTime = koTH.getCaptureTime();
         task = Bukkit.getScheduler().runTaskTimer(DamiXKoTH.getInstance(), () -> {
-
             if(reamingTime < 0 || dominatingTime < 0) {
                 finish();
                 return;
@@ -46,7 +45,7 @@ public class ActiveKoTH {
                 assert getKoTH().getFirstPosition() != null;
                 assert getKoTH().getSecondPosition() != null;
                 if(KoTHUtils.isLocationInCuboid(player.getLocation(), getKoTH().getFirstPosition(), getKoTH().getSecondPosition())){
-                    if(getDominating() == player) return;
+                    if(getDominating() == player) continue;
                     if(getDominating() == null){
                         setDominatingTime(koTH.getCaptureTime());
                         setDominating(player);
@@ -55,28 +54,33 @@ public class ActiveKoTH {
                                 sendMessage(onlinePlayer, s.replace("%player%", player.getName()).replace("%koth%", getKoTH().getName()));
                             }
                         }
-                        return;
+                        continue;
                     }
                 }
                 if(getDominating() == player){
+                    boolean var = false;
                     for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                         if(KoTHUtils.isLocationInCuboid(onlinePlayer.getLocation(), getKoTH().getFirstPosition(), getKoTH().getSecondPosition())) {
                             setDominatingTime(koTH.getCaptureTime());
                             setDominating(player);
+                            var = true;
                             for (Player op : Bukkit.getOnlinePlayers()) {
                                 for (String s : DamiXKoTH.getMessages().getMessageList("koth.now-dominating")) {
                                     sendMessage(op, s.replace("%player%", onlinePlayer.getName()).replace("%koth%", getKoTH().getName()));
                                 }
                             }
-                            return;
+
                         }
                     }
-                    setDominating(null);
-                    setDominatingTime(getKoTH().getCaptureTime());
-                    for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-                        for (String s : DamiXKoTH.getMessages().getMessageList("koth.no-one-dominating")) {
-                            sendMessage(onlinePlayer, s.replace("%koth%", koTH.getName()));
+                    if(!var) {
+                        setDominating(null);
+                        setDominatingTime(getKoTH().getCaptureTime());
+                        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+                            for (String s : DamiXKoTH.getMessages().getMessageList("koth.no-one-dominating")) {
+                                sendMessage(onlinePlayer, s.replace("%koth%", koTH.getName()));
+                            }
                         }
+
                     }
                 }
 
