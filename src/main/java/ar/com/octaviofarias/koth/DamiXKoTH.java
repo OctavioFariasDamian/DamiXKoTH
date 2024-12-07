@@ -27,6 +27,7 @@ public final class DamiXKoTH extends JavaPlugin {
         settings = new SettingsConfig("settings", getDataFolder(), true, this);
 
         KoTHManager.loadKoTHs();
+        if(getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) new KoTHPlaceholderExpansion().register();
 
         Objects.requireNonNull(getCommand("koth")).setTabCompleter(new KoTHCommand());
         Objects.requireNonNull(getCommand("koth")).setExecutor(new KoTHCommand());

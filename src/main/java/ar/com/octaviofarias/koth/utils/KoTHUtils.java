@@ -12,6 +12,7 @@ import org.bukkit.inventory.ItemStack;
 import java.io.File;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -141,6 +142,17 @@ public class KoTHUtils {
             return;
         }
         sender.sendMessage(color(s));
+    }
+
+    public static String formatTime(int seconds, String format) {
+        int hours = seconds / 3600;
+        int minutes = (seconds % 3600) / 60;
+        int remainingSeconds = seconds % 60;
+
+        Date time = new Date(0, 0, 0, hours, minutes, remainingSeconds);
+
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        return sdf.format(time);
     }
 
     public static void sendMessage(CommandSender sender, List<String> list) {

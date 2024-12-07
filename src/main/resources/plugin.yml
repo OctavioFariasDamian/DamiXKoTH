@@ -3,6 +3,8 @@ version: '1.0'
 main: ar.com.octaviofarias.koth.DamiXKoTH
 api-version: '1.21'
 authors: [ DamianFarias ]
+softdepend:
+  - PlaceholderAPI
 description: An easy and feature King of The Hill Minecraft Plugin
 website: https://octaviofarias.com.ar
 commands:

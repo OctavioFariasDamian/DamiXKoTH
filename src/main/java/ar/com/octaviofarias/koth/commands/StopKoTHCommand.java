@@ -37,7 +37,7 @@ public class StopKoTHCommand implements KoTHSubCommand{
             return;
         }
 
-        if(KoTHManager.isKoTHStarted(koth)){
+        if(!KoTHManager.isKoTHStarted(koth)){
             sendMessage(sender,DamiXKoTH.getMessages().getMessage("commands.stop.not-started").replace("%name%", name));
             return;
         }

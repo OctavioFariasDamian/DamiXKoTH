@@ -57,6 +57,7 @@ public class KoTHListener implements Listener {
                     }
                 }
                 koTH.setDominating(null);
+                koTH.setDominatingTime(koTH.getKoTH().getCaptureTime());
                 for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                     for (String s : DamiXKoTH.getMessages().getMessageList("koth.no-one-dominating")) {
                         sendMessage(onlinePlayer, s.replace("%koth%", koTH.getKoTH().getName()));

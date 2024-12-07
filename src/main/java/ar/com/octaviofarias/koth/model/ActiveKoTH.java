@@ -41,12 +41,13 @@ public class ActiveKoTH {
                 return;
             }
             reamingTime--;
+            if(dominating != null) dominatingTime--;
         }, 0L, 20L);
     }
 
     private void finish() {
         cancel();
-        if(dominating != null || dominatingTime < 0){
+        if(dominating != null && dominatingTime < 0){
             koTH.getRewards().give(dominating);
             for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
                 for (String s : DamiXKoTH.getMessages().getMessageList("koth.finish-with-winner")) {

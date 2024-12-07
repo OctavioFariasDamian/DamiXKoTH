@@ -1,4 +1,6 @@
 menus:
   rewards:
-    title: "&0&n%name%'s koth rewards&r"
+    title: "&0%name%'s koth items rewards&r"
     rows: 6
+nobody-placeholder: "&cNobody"
+dominating-time-format: "mm:ss" # minutes:seconds || 90 seconds || 01:30
