@@ -2,5 +2,17 @@ menus:
   rewards:
     title: "&0%name%'s koth items rewards&r"
     rows: 6
+# This placeholder is used when need to represent nobody in a placeholder like %damixkoth_dominating_name_kothname%
+# If it returns null then we replace it for that placeholder
 nobody-placeholder: "&cNobody"
-dominating-time-format: "mm:ss" # minutes:seconds || 90 seconds || 01:30
+
+yes-placeholder: "&aYes"
+no-placeholder: "&cNo"
+
+# This format is used when we have to representate seconds to a formal format like "mm:ss"
+# Example how this look: 40:12
+# 40 minute and 12 seconds
+time-format: "mm:ss"
+
+# Don't touch this!
+config-version: 1

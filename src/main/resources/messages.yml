@@ -36,6 +36,7 @@ commands:
     - "&c/koth start <koth> <activeTime> &f- &7Start the koth for selected seconds"
     - "&c/koth rewards <koth> items|commands &f- &7Set the items and commands rewards for a koth"
     - "&c/koth stop <koth> &f- &7Stops an active koth"
+    - "&c/koth list &f- &7List all server koths"
   only-players: "&cOnly players can execute this."
   unknown-koth: "&cThat koth doesn't exists."
   invalid-number: "&cThe command requires a valid number."
@@ -91,3 +92,7 @@ commands:
     usage: "&cThe usage of the command is: /koth stop <koth>"
     not-started: "&cThat koth is not started yet!"
     successfully: "&fYou stop the koth &a%name%&f."
+  list:
+    empty-koths: "&cThere are not any koth created yet."
+    header: "&a&lKoths list:"
+    each: "&f - &e%name%&f - &bStarted: %started%"

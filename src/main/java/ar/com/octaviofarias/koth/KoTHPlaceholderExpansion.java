@@ -41,21 +41,21 @@ public class KoTHPlaceholderExpansion extends PlaceholderExpansion {
             String name = params.replace("active_time_", "");
             ActiveKoTH ak = KoTHManager.getActiveKoTH(name);
             if(ak != null){
-                return KoTHUtils.formatTime(ak.getActiveTime(), DamiXKoTH.getSettings().getSetting("dominating-time-format"));
+                return KoTHUtils.formatTime(ak.getActiveTime(), DamiXKoTH.getSettings().getSetting("time-format"));
             }
         }
         else if(params.toLowerCase().startsWith("reaming_time_")){
             String name = params.replace("reaming_time_", "");
             ActiveKoTH ak = KoTHManager.getActiveKoTH(name);
             if(ak != null){
-                return KoTHUtils.formatTime(ak.getReamingTime(), DamiXKoTH.getSettings().getSetting("dominating-time-format"));
+                return KoTHUtils.formatTime(ak.getReamingTime(), DamiXKoTH.getSettings().getSetting("time-format"));
             }
         }
         else if(params.toLowerCase().startsWith("dominating_time_")){
             String name = params.replace("dominating_time_", "");
             ActiveKoTH ak = KoTHManager.getActiveKoTH(name);
             if(ak != null){
-                return KoTHUtils.formatTime(ak.getDominatingTime(), DamiXKoTH.getSettings().getSetting("dominating-time-format"));
+                return KoTHUtils.formatTime(ak.getDominatingTime(), DamiXKoTH.getSettings().getSetting("time-format"));
             }
         }
         else if(params.toLowerCase().startsWith("dominating_name_")){
