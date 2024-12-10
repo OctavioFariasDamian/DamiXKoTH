@@ -148,6 +148,7 @@ public class SchedulersKoTHCommand implements KoTHSubCommand{
             KoTHManager.update(koth);
 
             sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.schedulers.remove.successfuly")
+                    .replace("%id%", String.valueOf(index))
                     .replace("%name%", koth.getName()));
 
 
