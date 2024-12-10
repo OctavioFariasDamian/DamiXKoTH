@@ -107,7 +107,7 @@ commands:
       - "&f Secondo Point: %secondPoint%"
     rewards:
       - ""
-      - "&d&lKoth Reward Info"
+      - "&d&lKoth Reward Info:"
       - ""
       - "&f Commands Count: &e%commandsCount%"
       - "&f Items Count: &a%itemsCount%"
@@ -115,8 +115,15 @@ commands:
       - "&6To see details use /koth rewards"
     started:
       - ""
-      - "&e&lStarted Koth Info"
+      - "&e&lStarted Koth Info:"
       - ""
       - "&f Countdown: &c%countdown%"
       - "&f Dominating Player: &a%dominating%"
       - "&f Dominating Time: &9%dominatingTime%"
+  schedulers:
+    usage: "&cThe usage of the command is: /koth schedulers add|list|remove|next"
+    list:
+      usage: "&cThe usage of the subcommand is: /koth schedulers list <koth>"
+      empty: "&cThat koth don't have any schedulers yet!"
+      header: "&9&lKoth Schedulers List:"
+      each: "&f - &a#%id% &f- &e%day% &f - &a%hour%:%minute%:%second%"
