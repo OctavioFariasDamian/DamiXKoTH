@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
-import java.util.Set;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -24,5 +24,5 @@ public class KoTH {
     private File file;
     @NotNull
     private DamianConfig config;
-    private Set<KoTHScheduler> schedulers;
+    private List<KoTHScheduler> schedulers;
 }

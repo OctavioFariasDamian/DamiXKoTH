@@ -116,7 +116,43 @@ public class SchedulersKoTHCommand implements KoTHSubCommand{
                     .replace("%second%", String.valueOf(second))
                     .replace("%duration%", String.valueOf(duration)));
 
-            return;
+        }else if(args[0].equalsIgnoreCase("remove")) {
+            if(args.length < 3){
+                sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.schedulers.remove.usage"));
+                return;
+            }
+
+            KoTH koth = KoTHManager.getKoTH(args[1]);
+
+            if(koth == null){
+                sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.unknown-koth"));
+                return;
+            }
+
+            int index;
+
+            try{
+                index = Integer.parseInt(args[2]);
+            }catch(NumberFormatException e){
+                sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.invalid-number"));
+                return;
+            }
+
+            if(index < 0 || index >= koth.getSchedulers().size()){
+                sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.schedulers.remove.out-of-index"));
+                return;
+            }
+
+            koth.getSchedulers().remove(index);
+
+            KoTHManager.update(koth);
+
+            sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.schedulers.remove.successfuly")
+                    .replace("%name%", koth.getName()));
+
+
+        }else{
+            sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.schedulers.usage"));
         }
 
     }
