@@ -9,9 +9,14 @@ nobody-placeholder: "&cNobody"
 yes-placeholder: "&aYes"
 no-placeholder: "&cNo"
 
-# This format is used when we have to representate seconds to a formal format like "mm:ss"
+unavailable-placeholder: "&cUnavailable"
+
+location-format: "&a%x%&f, &a%y%&f, &a%z%&f, &e%world%" # Example: &a10&f, &a71&f, &a43&f, &esurvivalworld
+
+# This format is used when we have to represent seconds to a formal format like "mm:ss"
 # Example how this look: 40:12
 # 40 minute and 12 seconds
+# To add hour time you have to put "hh:" before "mm"
 time-format: "mm:ss"
 
 # Don't touch this!

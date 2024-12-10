@@ -2,7 +2,10 @@ package ar.com.octaviofarias.koth.configuration;
 
 import ar.com.octaviofarias.koth.utils.configuration.DamianConfig;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
+import org.bukkit.Location;
 import org.bukkit.plugin.Plugin;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.util.List;
@@ -49,5 +52,14 @@ public class SettingsConfig extends DamianConfig {
 
     private void addListDefault(String path, List<String> settings){
         settingsListDefault.put(path, settings);
+    }
+
+    public String translateLocation(@NotNull Location loc) {
+        return getSetting("location-format")
+                .replace("%x%", String.valueOf(loc.getBlockX()))
+                .replace("%y%", String.valueOf(loc.getBlockY()))
+                .replace("%z%", String.valueOf(loc.getBlockZ()))
+                .replace("%world%", loc.getWorld().getName());
+
     }
 }

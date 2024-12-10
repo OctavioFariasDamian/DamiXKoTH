@@ -8,6 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.sql.Timestamp;
@@ -242,6 +243,5 @@ public class KoTHUtils {
     public static void sendUnderline(CommandSender sender, char color) {
         sender.sendMessage(color("&"+color+getUnderline()));
     }
-
 
 }

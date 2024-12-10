@@ -28,6 +28,7 @@ public class KoTHCommand implements TabExecutor {
         subCommands.add(new StartKoTHCommand());
         subCommands.add(new StopKoTHCommand());
         subCommands.add(new ListKoTHCommand());
+        subCommands.add(new InfoKoTHCommand());
     }
     @Override
     public boolean onCommand(@NotNull CommandSender commandSender, @NotNull Command command, @NotNull String s, @NotNull String[] args) {

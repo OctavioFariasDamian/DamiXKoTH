@@ -96,3 +96,27 @@ commands:
     empty-koths: "&cThere are not any koth created yet."
     header: "&a&lKoths list:"
     each: "&f - &e%name%&f - &bStarted: %started%"
+  info:
+    usage: "&cThe usage of the command is: /koth info <koth>"
+    header:
+      - "&a&lKoth Info:"
+      - ""
+      - "&f Name: &e%name%"
+      - "&f Capture Time: &a%captureTime%"
+      - "&f First Point: %firstPoint%"
+      - "&f Secondo Point: %secondPoint%"
+    rewards:
+      - ""
+      - "&d&lKoth Reward Info"
+      - ""
+      - "&f Commands Count: &e%commandsCount%"
+      - "&f Items Count: &a%itemsCount%"
+      - ""
+      - "&6To see details use /koth rewards"
+    started:
+      - ""
+      - "&e&lStarted Koth Info"
+      - ""
+      - "&f Countdown: &c%countdown%"
+      - "&f Dominating Player: &a%dominating%"
+      - "&f Dominating Time: &9%dominatingTime%"
