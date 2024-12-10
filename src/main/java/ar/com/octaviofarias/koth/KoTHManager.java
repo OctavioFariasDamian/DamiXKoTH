@@ -48,7 +48,7 @@ public class KoTHManager {
         config.set("rewards.commands", new ArrayList<>());
         config.set("schedulers", new ArrayList<>());
         config.saveConfig();
-        KoTH koTH = new KoTH(name, 0, null, null, new KoTHRewards(new ArrayList<>(), new ArrayList<>()), f, config, new HashSet<>());
+        KoTH koTH = new KoTH(name, 0, null, null, new KoTHRewards(new ArrayList<>(), new ArrayList<>()), f, config, new ArrayList<>());
         koTHs.add(koTH);
     }
 
@@ -111,7 +111,7 @@ public class KoTHManager {
                             }
                         }
 
-                        Set<KoTHScheduler> schedulers = new HashSet<>();
+                        List<KoTHScheduler> schedulers = new ArrayList<>();
 
                         if(dc.getList("schedulers", String.class) != null){
                             for (String s : Objects.requireNonNull(dc.getList("rewards.commands", String.class))) {
