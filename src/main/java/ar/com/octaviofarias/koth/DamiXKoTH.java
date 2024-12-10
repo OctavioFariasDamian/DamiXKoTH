@@ -8,6 +8,7 @@ import ar.com.octaviofarias.koth.utils.menu.MenuListener;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.time.ZoneId;
 import java.util.Objects;
 
 public final class DamiXKoTH extends JavaPlugin {
@@ -26,6 +27,14 @@ public final class DamiXKoTH extends JavaPlugin {
         messages = new MessagesConfig("messages", getDataFolder(), true, this);
         settings = new SettingsConfig("settings", getDataFolder(), true, this);
 
+        try {
+            KoTHManager.setZone(ZoneId.of(settings.getSetting("time-zone")));
+        } catch (Exception e) {
+            getSLF4JLogger().error("The Time Zone in settings.yml file is invalid or null. Without it defined the plugin can't start, please check the config");
+            getServer().getPluginManager().disablePlugin(this);
+            return;
+        }
+
         KoTHManager.loadKoTHs();
         if(getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) new KoTHPlaceholderExpansion().register();
 
@@ -34,6 +43,8 @@ public final class DamiXKoTH extends JavaPlugin {
 
         getServer().getPluginManager().registerEvents(new KoTHListener(), this);
         getServer().getPluginManager().registerEvents(new MenuListener(), this);
+        KoTHManager.checkSchedulers();
+
     }
 
     @Override

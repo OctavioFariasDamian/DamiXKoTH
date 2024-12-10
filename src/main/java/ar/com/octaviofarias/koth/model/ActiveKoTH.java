@@ -34,8 +34,15 @@ public class ActiveKoTH {
     }
 
     public void scheduler(){
+        for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
+            for (String s : DamiXKoTH.getMessages().getMessageList("koth.start")) {
+                sendMessage(onlinePlayer, s.replace("%koth%", getKoTH().getName())
+                        .replace("%duration%", String.valueOf(activeTime)));
+            }
+        }
         reamingTime = activeTime;
         this.dominatingTime = koTH.getCaptureTime();
+        KoTHManager.checkSchedulers();
         task = Bukkit.getScheduler().runTaskTimer(DamiXKoTH.getInstance(), () -> {
             if(reamingTime < 0 || dominatingTime < 0) {
                 finish();
@@ -93,6 +100,7 @@ public class ActiveKoTH {
 
     private void finish() {
         cancel();
+        KoTHManager.checkSchedulers();
         if(dominating != null && dominatingTime < 0){
             koTH.getRewards().give(dominating);
             for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {

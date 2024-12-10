@@ -19,5 +19,9 @@ location-format: "&a%x%&f, &a%y%&f, &a%z%&f, &e%world%" # Example: &a10&f, &a71&
 # To add hour time you have to put "hh:" before "mm"
 time-format: "mm:ss"
 
+# We use the time zone to check koths schedulers, for that it's obligatory insert one
+# Check that the time zone is in your region in this page: https://www.timeanddate.com/time/map/
+time-zone: "UTC-3"
+
 # Don't touch this!
 config-version: 1

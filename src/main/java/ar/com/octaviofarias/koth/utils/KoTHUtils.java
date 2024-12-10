@@ -145,6 +145,19 @@ public class KoTHUtils {
         sender.sendMessage(color(s));
     }
 
+    public static void sendMessageWithoutPlaceholders(CommandSender sender, String s) {
+        if(s.startsWith("<center> ")) s = getCenteredMessage(s.replace("<center> ", ""));
+        else if(s.startsWith("<underline:")){
+            if(s.length() == 12){
+                sendUnderline(sender, s.charAt(11));
+            }else{
+                sendUnderline(sender, s.replace("<underline:", ""));
+            }
+            return;
+        }
+        sender.sendMessage(color(s));
+    }
+
     public static String formatTime(int seconds, String format) {
         int hours = seconds / 3600;
         int minutes = (seconds % 3600) / 60;

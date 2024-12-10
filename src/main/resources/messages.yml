@@ -3,27 +3,44 @@ no-permission: "&cYou don't have permission!"
 koth:
   no-one-dominating:
     - "<underline:a"
+    - ""
     - "<center> &fNo one is dominating the koth &a%koth%"
     - "<center> &fIt's your opportunity!"
+    - ""
     - "<underline:a"
   now-dominating:
     - "<underline:d"
+    - ""
     - "<center> &fNow the koth &d%koth% &fis getting dominated"
     - "<center> &fby &e%player%&f!"
+    - ""
     - "<underline:d"
   finish-with-winner:
     - "<underline:e"
+    - ""
     - "<center> &fThe koth &e%koth% &ffinish with a winner!"
     - "<center> &fThe winner is &a&l%player%&f, congratulations!"
+    - ""
     - "<underline:e"
   finish-without-winner:
     - "<underline:c"
+    - ""
     - "<center> &fThe koth &c%koth% &ffinish without a winner!"
+    - ""
     - "<underline:c"
   stopped:
     - "<underline:#ff0000"
+    - ""
     - "<center> &fThe koth #ff0000%koth% &fwas forced to stop!"
+    - ""
     - "<underline:#ff0000"
+  start:
+    - "<underline:#ffff00"
+    - ""
+    - "<center> &fThe koth #ff0000%koth% &fhas started!"
+    - "<center> &ffor &e%duration% &fseconds of duration"
+    - ""
+    - "<underline:#ffff00"
 commands:
   help:
     - "&a&lDamiXKoTH Help"

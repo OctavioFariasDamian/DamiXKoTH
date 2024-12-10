@@ -6,14 +6,20 @@ import ar.com.octaviofarias.koth.model.KoTHRewards;
 import ar.com.octaviofarias.koth.model.KoTHScheduler;
 import ar.com.octaviofarias.koth.utils.configuration.DamianConfig;
 import lombok.Getter;
+import lombok.Setter;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitTask;
 
 import java.io.File;
 import java.io.IOException;
 import java.time.DayOfWeek;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
 
 @SuppressWarnings({"ResultOfMethodCallIgnored", "LoggingSimilarMessage"})
 public class KoTHManager {
@@ -21,10 +27,11 @@ public class KoTHManager {
     private static final List<KoTH> koTHs = new ArrayList<>();
     @Getter
     private static final List<ActiveKoTH> activeKoTHs = new ArrayList<>();
+    private static final List<BukkitTask> tasks = new ArrayList<>();
 
-    public static boolean isKoTHStarted(KoTH koTH){
+    public static boolean isKoTHStarted(KoTH koTH) {
         for (ActiveKoTH activeKoTH : activeKoTHs) {
-            if(activeKoTH.getKoTH() == koTH) return true;
+            if (activeKoTH.getKoTH() == koTH) return true;
         }
         return false;
     }
@@ -167,4 +174,41 @@ public class KoTHManager {
                 }
         }
     }
+
+    @Getter
+    @Setter
+    private static ZoneId zone;
+
+    public static void checkSchedulers(){
+        for (BukkitTask task : tasks) {
+            task.cancel();
+        }
+        tasks.clear();
+        for (KoTH koTH : getKoTHs()) {
+            if(isKoTHStarted(koTH)) continue;
+            for (KoTHScheduler scheduler : koTH.getSchedulers()) {
+                ZonedDateTime now = ZonedDateTime.now(zone);
+                ZonedDateTime nextEvent = now.with(scheduler.getDay())
+                        .withHour(scheduler.getHour())
+                        .withMinute(scheduler.getMinutes())
+                        .withSecond(scheduler.getSeconds())
+                        .withNano(0);
+
+                if (now.isAfter(nextEvent)) {
+                    nextEvent = nextEvent.plusWeeks(1);
+                }
+
+                long delay = TimeUnit.SECONDS.convert(nextEvent.toEpochSecond() - now.toEpochSecond(), TimeUnit.SECONDS);
+
+                tasks.add(Bukkit.getScheduler().runTaskLater(DamiXKoTH.getInstance(), () -> {
+                    if(!isKoTHStarted(koTH)) {
+                        ActiveKoTH activeKoTH = new ActiveKoTH(scheduler.getDuration(), koTH);
+                        activeKoTH.scheduler();
+                        KoTHManager.getActiveKoTHs().add(activeKoTH);
+                    }
+                }, delay * 20L));
+            }
+        }
+    }
+
 }

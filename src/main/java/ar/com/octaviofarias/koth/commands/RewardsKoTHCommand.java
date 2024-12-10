@@ -16,6 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 import static ar.com.octaviofarias.koth.utils.KoTHUtils.sendMessage;
+import static ar.com.octaviofarias.koth.utils.KoTHUtils.sendMessageWithoutPlaceholders;
 
 public class RewardsKoTHCommand implements KoTHSubCommand{
 
@@ -72,7 +73,7 @@ public class RewardsKoTHCommand implements KoTHSubCommand{
                 sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.rewards.commands.list.header").replace("%name%", koth.getName()));
                 int i = 0;
                 for (String command : koth.getRewards().getCommands()) {
-                    sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.rewards.commands.list.each")
+                    sendMessageWithoutPlaceholders(sender, DamiXKoTH.getMessages().getMessage("commands.rewards.commands.list.each")
                             .replace("%command%", command).replace("%id%", String.valueOf(i)));
                     i++;
                 }
@@ -91,7 +92,7 @@ public class RewardsKoTHCommand implements KoTHSubCommand{
                 koth.getRewards().getCommands().add(finalS);
                 KoTHManager.update(koth);
 
-                sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.rewards.commands.add.successfully")
+                sendMessageWithoutPlaceholders(sender, DamiXKoTH.getMessages().getMessage("commands.rewards.commands.add.successfully")
                         .replace("%command%", finalS).replace("%id%", String.valueOf(koth.getRewards().getCommands().size()-1)));
                 return;
             }else if(args[2].equalsIgnoreCase("remove")){
@@ -115,7 +116,7 @@ public class RewardsKoTHCommand implements KoTHSubCommand{
                 }
                 String cmd = koth.getRewards().getCommands().get(index);
                 koth.getRewards().getCommands().remove(index);
-                sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.rewards.commands.remove.successfully")
+                sendMessageWithoutPlaceholders(sender, DamiXKoTH.getMessages().getMessage("commands.rewards.commands.remove.successfully")
                         .replace("%command%", cmd).replace("%id%", String.valueOf(index)));
 
             }else{
