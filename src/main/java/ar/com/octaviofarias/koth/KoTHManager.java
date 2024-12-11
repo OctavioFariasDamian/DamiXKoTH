@@ -120,8 +120,8 @@ public class KoTHManager {
 
                         List<KoTHScheduler> schedulers = new ArrayList<>();
 
-                        if(dc.getList("schedulers", String.class) != null){
-                            for (String s : Objects.requireNonNull(dc.getList("schedulers", String.class))) {
+                        if(dc.asConfig().isLocation("schedulers")){
+                            for (String s : Objects.requireNonNull(dc.asConfig().getStringList("schedulers"))) {
                                 if(s.split(";").length != 3){
                                     DamiXKoTH.getInstance().getSLF4JLogger().warn("The scheduler: '{}' at '{}' has invalid format (dayofweek;hour:minutes:seconds;duration)", s, f.getName());
                                     continue;
@@ -130,7 +130,7 @@ public class KoTHManager {
                                 int h, m, seg, d;
 
                                 try {
-                                    day = DayOfWeek.valueOf(s.split(";")[0]);
+                                    day = DayOfWeek.valueOf(s.split(";")[0].toUpperCase());
                                 }catch (IllegalArgumentException e){
                                     DamiXKoTH.getInstance().getSLF4JLogger().warn("The day of week: '{}' from scheduler '{}' at '{}' is invalid. Valid: MONDAY, TUESDAY, WEDNESDAY, THURSDAY, FRIDAY, SATURDAY AND SUNDAY", s.split(";")[0], s, f.getName());
                                     continue;
