@@ -107,6 +107,8 @@ public class SchedulersKoTHCommand implements KoTHSubCommand{
             koTH.getSchedulers().add(new KoTHScheduler(day, hour, minute, second, duration));
             KoTHManager.update(koTH);
 
+            KoTHManager.checkSchedulers();
+            
             sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.schedulers.add.successfully")
                     .replace("%name%", koTH.getName())
                     .replace("%id%", String.valueOf(koTH.getSchedulers().size()-1))
@@ -151,6 +153,7 @@ public class SchedulersKoTHCommand implements KoTHSubCommand{
                     .replace("%id%", String.valueOf(index))
                     .replace("%name%", koth.getName()));
 
+            KoTHManager.checkSchedulers();
 
         }else{
             sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.schedulers.usage"));
