@@ -108,7 +108,7 @@ public class SchedulersKoTHCommand implements KoTHSubCommand{
             KoTHManager.update(koTH);
 
             KoTHManager.checkSchedulers();
-            
+
             sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.schedulers.add.successfully")
                     .replace("%name%", koTH.getName())
                     .replace("%id%", String.valueOf(koTH.getSchedulers().size()-1))

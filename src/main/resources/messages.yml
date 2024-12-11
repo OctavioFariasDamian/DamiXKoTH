@@ -146,7 +146,7 @@ commands:
       header: "&9&lKoth Schedulers List:"
       each: "&f - &a#%id% &f- &e%day% &f - &a%hour%:%minute%:%second% &f - duration: &d%duration%"
     add:
-      usage: "&cThe usage of the subcommand is: /koth schedulers add <koth> <time (hh:mm:ss)> <duation>"
+      usage: "&cThe usage of the subcommand is: /koth schedulers add <koth> <day of week> <time (hh:mm:ss)> <duration>"
       successfully: "&fYou add a new scheduler to koth &e%name% &fwith id &a%id%&f, at the days &9%day%&f at the &b%hour%:%minute%:%second% &fwith duration of &6%duration% &fseconds."
       invalid-day-of-week: "&cYou didn't put an invalid day of week."
       invalid-time-format: "&cThe time format you've to put is: &ehh:mm:ss"

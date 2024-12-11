@@ -121,7 +121,7 @@ public class KoTHManager {
                         List<KoTHScheduler> schedulers = new ArrayList<>();
 
                         if(dc.getList("schedulers", String.class) != null){
-                            for (String s : Objects.requireNonNull(dc.getList("rewards.commands", String.class))) {
+                            for (String s : Objects.requireNonNull(dc.getList("schedulers", String.class))) {
                                 if(s.split(";").length != 3){
                                     DamiXKoTH.getInstance().getSLF4JLogger().warn("The scheduler: '{}' at '{}' has invalid format (dayofweek;hour:minutes:seconds;duration)", s, f.getName());
                                     continue;
