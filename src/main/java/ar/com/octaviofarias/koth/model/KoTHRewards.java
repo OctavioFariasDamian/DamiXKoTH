@@ -21,12 +21,19 @@ public class KoTHRewards {
                     (Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null ?
                             PlaceholderAPI.setPlaceholders(player, s.replace("%player%", player.getName())) : s.replace("%player%", player.getName())));
         }
+        int i = 0;
         for (ItemStack item : items) {
+            if(item == null)
+            {
+                items.remove(i);
+                continue;
+            }
             if(player.getInventory().firstEmpty() != -1){
                 player.getInventory().addItem(item);
             }else{
                 player.getWorld().dropItem(player.getLocation().add(0, 1, 0), item);
             }
+            i++;
         }
     }
 
