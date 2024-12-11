@@ -4,7 +4,6 @@ import ar.com.octaviofarias.koth.commands.KoTHCommand;
 import ar.com.octaviofarias.koth.configuration.MessagesConfig;
 import ar.com.octaviofarias.koth.configuration.SettingsConfig;
 import ar.com.octaviofarias.koth.listeners.KoTHListener;
-import ar.com.octaviofarias.koth.utils.menu.MenuListener;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -42,7 +41,6 @@ public final class DamiXKoTH extends JavaPlugin {
         Objects.requireNonNull(getCommand("koth")).setExecutor(new KoTHCommand());
 
         getServer().getPluginManager().registerEvents(new KoTHListener(), this);
-        getServer().getPluginManager().registerEvents(new MenuListener(), this);
         KoTHManager.checkSchedulers();
 
     }

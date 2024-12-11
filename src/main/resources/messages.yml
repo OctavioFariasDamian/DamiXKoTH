@@ -144,7 +144,7 @@ commands:
       usage: "&cThe usage of the subcommand is: /koth schedulers list <koth>"
       empty: "&cThat koth don't have any schedulers yet!"
       header: "&9&lKoth Schedulers List:"
-      each: "&f - &a#%id% &f- &e%day% &f - &a%hour%:%minute%:%second% &f - duration: &d%duration%"
+      each: "&f - &a#%id% &f- &e%day% &f- &a%hour%:%minute%:%second% &f- duration: &d%duration%"
     add:
       usage: "&cThe usage of the subcommand is: /koth schedulers add <koth> <day of week> <time (hh:mm:ss)> <duration>"
       successfully: "&fYou add a new scheduler to koth &e%name% &fwith id &a%id%&f, at the days &9%day%&f at the &b%hour%:%minute%:%second% &fwith duration of &6%duration% &fseconds."
