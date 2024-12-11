@@ -8,9 +8,11 @@ import org.apache.commons.lang3.StringUtils;
 import org.bukkit.command.CommandSender;
 
 import java.time.DayOfWeek;
+import java.time.Duration;
+import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
-import static ar.com.octaviofarias.koth.utils.KoTHUtils.sendCenteredMessage;
 import static ar.com.octaviofarias.koth.utils.KoTHUtils.sendMessage;
 
 public class SchedulersKoTHCommand implements KoTHSubCommand{
@@ -57,7 +59,6 @@ public class SchedulersKoTHCommand implements KoTHSubCommand{
                         .replace("%duration%", String.valueOf(scheduler.getDuration())));
                 i++;
             }
-            return;
         }else if(args[0].equalsIgnoreCase("add")){
             if(args.length < 5){
                 sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.schedulers.add.usage"));
@@ -155,7 +156,54 @@ public class SchedulersKoTHCommand implements KoTHSubCommand{
 
             KoTHManager.checkSchedulers();
 
-        }else{
+        }else if(args[0].equalsIgnoreCase("next")) {
+            KoTH selected = null;
+            long min = Long.MAX_VALUE;
+            ZonedDateTime dt = null;
+            for (KoTH koTH : KoTHManager.getKoTHs()) {
+                if (KoTHManager.isKoTHStarted(koTH)) continue;
+                for (KoTHScheduler scheduler : koTH.getSchedulers()) {
+                    ZonedDateTime now = ZonedDateTime.now(KoTHManager.getZone());
+                    ZonedDateTime nextEvent = now.with(scheduler.getDay())
+                            .withHour(scheduler.getHour())
+                            .withMinute(scheduler.getMinutes())
+                            .withSecond(scheduler.getSeconds())
+                            .withNano(0);
+
+                    if (now.isAfter(nextEvent)) {
+                        nextEvent = nextEvent.plusWeeks(1);
+                    }
+
+                    long delay = TimeUnit.SECONDS.convert(nextEvent.toEpochSecond() - now.toEpochSecond(), TimeUnit.SECONDS);
+                    if(delay < min){
+                        dt = nextEvent;
+                        selected = koTH;
+                        min = delay;
+                    }
+                }
+            }
+
+            if(selected == null){
+                sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.schedulers.next.empty"));
+                return;
+            }
+
+            ZonedDateTime now = ZonedDateTime.now(KoTHManager.getZone());
+
+            Duration duration = Duration.between(now, dt);
+
+            long totalSeconds = duration.getSeconds();
+            long hours = totalSeconds / 3600;
+            long minutes = (totalSeconds % 3600) / 60;
+            long seconds = totalSeconds % 60;
+
+            sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.schedulers.next.successfully")
+                    .replace("%name%", selected.getName())
+                    .replace("%time%", hours+"h " + minutes+"m " + seconds +"s"
+
+                            ));
+
+        } else{
             sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.schedulers.usage"));
         }
 

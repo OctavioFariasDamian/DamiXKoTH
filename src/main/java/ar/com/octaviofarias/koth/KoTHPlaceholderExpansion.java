@@ -1,11 +1,17 @@
 package ar.com.octaviofarias.koth;
 
 import ar.com.octaviofarias.koth.model.ActiveKoTH;
+import ar.com.octaviofarias.koth.model.KoTH;
+import ar.com.octaviofarias.koth.model.KoTHScheduler;
 import ar.com.octaviofarias.koth.utils.KoTHUtils;
 import me.clip.placeholderapi.expansion.PlaceholderExpansion;
 import org.bukkit.OfflinePlayer;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
+
+import java.time.Duration;
+import java.time.ZonedDateTime;
+import java.util.concurrent.TimeUnit;
 
 public class KoTHPlaceholderExpansion extends PlaceholderExpansion {
     @Override
@@ -57,6 +63,48 @@ public class KoTHPlaceholderExpansion extends PlaceholderExpansion {
             if(ak != null){
                 return KoTHUtils.formatTime(ak.getDominatingTime(), DamiXKoTH.getSettings().getSetting("time-format"));
             }
+        }
+        else if(params.equalsIgnoreCase("next")){
+            KoTH selected = null;
+            long min = Long.MAX_VALUE;
+            ZonedDateTime dt = null;
+            for (KoTH koTH : KoTHManager.getKoTHs()) {
+                if (KoTHManager.isKoTHStarted(koTH)) continue;
+                for (KoTHScheduler scheduler : koTH.getSchedulers()) {
+                    ZonedDateTime now = ZonedDateTime.now(KoTHManager.getZone());
+                    ZonedDateTime nextEvent = now.with(scheduler.getDay())
+                            .withHour(scheduler.getHour())
+                            .withMinute(scheduler.getMinutes())
+                            .withSecond(scheduler.getSeconds())
+                            .withNano(0);
+
+                    if (now.isAfter(nextEvent)) {
+                        nextEvent = nextEvent.plusWeeks(1);
+                    }
+
+                    long delay = TimeUnit.SECONDS.convert(nextEvent.toEpochSecond() - now.toEpochSecond(), TimeUnit.SECONDS);
+                    if(delay < min){
+                        dt = nextEvent;
+                        selected = koTH;
+                        min = delay;
+                    }
+                }
+            }
+
+            if(selected == null){
+                return "";
+            }
+
+            ZonedDateTime now = ZonedDateTime.now(KoTHManager.getZone());
+
+            Duration duration = Duration.between(now, dt);
+
+            long totalSeconds = duration.getSeconds();
+            long hours = totalSeconds / 3600;
+            long minutes = (totalSeconds % 3600) / 60;
+            long seconds = totalSeconds % 60;
+
+            return hours+"h " + minutes+"m " + seconds +"s";
         }
         else if(params.toLowerCase().startsWith("dominating_name_")){
             String name = params.replace("dominating_name_", "");
