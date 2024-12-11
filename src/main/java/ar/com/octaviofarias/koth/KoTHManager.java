@@ -55,7 +55,8 @@ public class KoTHManager {
         config.set("rewards.commands", new ArrayList<>());
         config.set("schedulers", new ArrayList<>());
         config.saveConfig();
-        KoTH koTH = new KoTH(name, 0, null, null, new KoTHRewards(new ArrayList<>(), new ArrayList<>()), f, config, new ArrayList<>());
+        KoTH koTH = new KoTH(name, 0, null, null, new KoTHRewards(new ArrayList<>(), null, new ArrayList<>()), f, config, new ArrayList<>());
+        koTH.setRewards(new KoTHRewards(new ArrayList<>(), koTH, new ArrayList<>()));
         koTHs.add(koTH);
     }
 
@@ -169,7 +170,8 @@ public class KoTHManager {
                         if(dc.asConfig().isLocation("first-point")) l1 = dc.asConfig().getLocation("first-point");
                         if(dc.asConfig().isLocation("second-point")) l2 = dc.asConfig().getLocation("second-point");
                         KoTH koth = new KoTH(f.getName().replace(".yml", ""),
-                                ct, l1, l2, new KoTHRewards(commands, items), f, dc, schedulers);
+                                ct, l1, l2, new KoTHRewards(commands, null, items), f, dc, schedulers);
+                        koth.setRewards(new KoTHRewards(commands, koth, items));
                         koTHs.add(koth);
                     }
                 }

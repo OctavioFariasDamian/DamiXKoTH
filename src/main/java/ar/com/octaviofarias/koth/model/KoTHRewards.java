@@ -1,5 +1,6 @@
 package ar.com.octaviofarias.koth.model;
 
+import ar.com.octaviofarias.koth.KoTHManager;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import me.clip.placeholderapi.PlaceholderAPI;
@@ -13,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 public class KoTHRewards {
     private List<String> commands;
+    private final KoTH koth;
     private List<ItemStack> items;
 
     public void give(Player player){
@@ -26,6 +28,7 @@ public class KoTHRewards {
             if(item == null)
             {
                 items.remove(i);
+                i++;
                 continue;
             }
             if(player.getInventory().firstEmpty() != -1){
@@ -35,6 +38,9 @@ public class KoTHRewards {
             }
             i++;
         }
+
+        if(i != items.size()-1) KoTHManager.update(koth);
+
     }
 
 }
