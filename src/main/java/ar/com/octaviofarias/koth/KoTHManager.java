@@ -120,8 +120,8 @@ public class KoTHManager {
 
                         List<KoTHScheduler> schedulers = new ArrayList<>();
 
-                        if(dc.asConfig().isLocation("schedulers")){
-                            for (String s : Objects.requireNonNull(dc.asConfig().getStringList("schedulers"))) {
+                        if(dc.asConfig().isList("schedulers")){
+                            for (String s : dc.asConfig().getStringList("schedulers")) {
                                 if(s.split(";").length != 3){
                                     DamiXKoTH.getInstance().getSLF4JLogger().warn("The scheduler: '{}' at '{}' has invalid format (dayofweek;hour:minutes:seconds;duration)", s, f.getName());
                                     continue;
@@ -137,6 +137,7 @@ public class KoTHManager {
                                 }
 
                                 String[] time = s.split(";")[1].split(":");
+
                                 if(time.length != 3){
                                     DamiXKoTH.getInstance().getSLF4JLogger().warn("The time format (hour:minutes:seconds): '{}' from scheduler '{}' at '{}' has invalid format (dayofweek;hour:minutes:seconds;duration)", s.split(";")[1], s, f.getName());
                                     continue;
