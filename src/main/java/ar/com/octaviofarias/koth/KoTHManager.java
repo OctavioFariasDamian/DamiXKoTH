@@ -93,7 +93,7 @@ public class KoTHManager {
         if(koth.getSecondPosition() != null) con.set("second-point", koth.getSecondPosition());
         List<String> schedulers = new ArrayList<>();
         for (KoTHScheduler scheduler : koth.getSchedulers()) {
-            schedulers.add(scheduler.getDay().toString().toLowerCase()+";"+scheduler.getHour()+":"+scheduler.getMinutes()+":"+scheduler.getSeconds()+";"+scheduler.getDuration());
+            schedulers.add(scheduler.getDay().toString().toLowerCase()+";"+scheduler.getFormatedHour()+":"+scheduler.getFormatedMinutes()+":"+scheduler.getFormatedSeconds()+";"+scheduler.getDuration());
         }
         con.set("schedulers", schedulers);
         con.saveConfig();
@@ -153,7 +153,7 @@ public class KoTHManager {
                                 }
 
                                 try{
-                                    d = Integer.parseInt(time[2]);
+                                    d = Integer.parseInt(s.split(";")[2]);
                                 }catch (NumberFormatException e){
                                     DamiXKoTH.getInstance().getSLF4JLogger().warn("The duration of active koth: '{}' from scheduler '{}' at '{}' has to be a number!", s.split(";")[2], s, f.getName());
                                     continue;

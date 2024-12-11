@@ -51,9 +51,9 @@ public class SchedulersKoTHCommand implements KoTHSubCommand{
                 sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.schedulers.list.each")
                         .replace("%id%", String.valueOf(i))
                         .replace("%day%", StringUtils.capitalize(scheduler.getDay().toString().toLowerCase()))
-                        .replace("%hour%", String.valueOf(scheduler.getHour()))
-                        .replace("%minute%", String.valueOf(scheduler.getMinutes()))
-                        .replace("%second%", String.valueOf(scheduler.getSeconds()))
+                        .replace("%hour%", String.valueOf(scheduler.getFormatedHour()))
+                        .replace("%minute%", String.valueOf(scheduler.getFormatedMinutes()))
+                        .replace("%second%", String.valueOf(scheduler.getFormatedSeconds()))
                         .replace("%duration%", String.valueOf(scheduler.getDuration())));
                 i++;
             }
@@ -103,8 +103,8 @@ public class SchedulersKoTHCommand implements KoTHSubCommand{
                 sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.invalid-number"));
                 return;
             }
-
-            koTH.getSchedulers().add(new KoTHScheduler(day, hour, minute, second, duration));
+            KoTHScheduler scheduler = new KoTHScheduler(day, hour, minute, second, duration);
+            koTH.getSchedulers().add(scheduler);
             KoTHManager.update(koTH);
 
             KoTHManager.checkSchedulers();
@@ -113,9 +113,9 @@ public class SchedulersKoTHCommand implements KoTHSubCommand{
                     .replace("%name%", koTH.getName())
                     .replace("%id%", String.valueOf(koTH.getSchedulers().size()-1))
                     .replace("%day%", StringUtils.capitalize(day.name().toLowerCase()))
-                    .replace("%hour%", String.valueOf(hour))
-                    .replace("%minute%", String.valueOf(minute))
-                    .replace("%second%", String.valueOf(second))
+                    .replace("%hour%", String.valueOf(scheduler.getFormatedHour()))
+                    .replace("%minute%", String.valueOf(scheduler.getFormatedMinutes()))
+                    .replace("%second%", String.valueOf(scheduler.getFormatedSeconds()))
                     .replace("%duration%", String.valueOf(duration)));
 
         }else if(args[0].equalsIgnoreCase("remove")) {
