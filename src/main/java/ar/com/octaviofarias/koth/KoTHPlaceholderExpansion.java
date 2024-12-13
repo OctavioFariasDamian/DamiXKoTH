@@ -45,6 +45,16 @@ public class KoTHPlaceholderExpansion extends PlaceholderExpansion {
         }
         else if(params.toLowerCase().startsWith("active_time_")){
             String name = params.replace("active_time_", "");
+
+            if(name.startsWith("[")){
+                int index = Integer.parseInt(name.replace("[", ""));
+                if(index < 0 || index >= KoTHManager.getActiveKoTHs().size()) return "";
+                ActiveKoTH ak = KoTHManager.getActiveKoTHs().get(index);
+                if(ak != null){
+                    return KoTHUtils.formatTime(ak.getActiveTime(), DamiXKoTH.getSettings().getSetting("time-format"));
+                }
+            }
+
             ActiveKoTH ak = KoTHManager.getActiveKoTH(name);
             if(ak != null){
                 return KoTHUtils.formatTime(ak.getActiveTime(), DamiXKoTH.getSettings().getSetting("time-format"));
@@ -52,6 +62,16 @@ public class KoTHPlaceholderExpansion extends PlaceholderExpansion {
         }
         else if(params.toLowerCase().startsWith("reaming_time_")){
             String name = params.replace("reaming_time_", "");
+
+            if(name.startsWith("[")){
+                int index = Integer.parseInt(name.replace("[", ""));
+                if(index < 0 || index >= KoTHManager.getActiveKoTHs().size()) return "";
+                ActiveKoTH ak = KoTHManager.getActiveKoTHs().get(index);
+                if(ak != null){
+                    return KoTHUtils.formatTime(ak.getReamingTime(), DamiXKoTH.getSettings().getSetting("time-format"));
+                }
+            }
+
             ActiveKoTH ak = KoTHManager.getActiveKoTH(name);
             if(ak != null){
                 return KoTHUtils.formatTime(ak.getReamingTime(), DamiXKoTH.getSettings().getSetting("time-format"));
@@ -59,6 +79,14 @@ public class KoTHPlaceholderExpansion extends PlaceholderExpansion {
         }
         else if(params.toLowerCase().startsWith("dominating_time_")){
             String name = params.replace("dominating_time_", "");
+            if(name.startsWith("[")){
+                int index = Integer.parseInt(name.replace("[", ""));
+                if(index < 0 || index >= KoTHManager.getActiveKoTHs().size()) return "";
+                ActiveKoTH ak = KoTHManager.getActiveKoTHs().get(index);
+                if(ak != null){
+                    return KoTHUtils.formatTime(ak.getDominatingTime(), DamiXKoTH.getSettings().getSetting("time-format"));
+                }
+            }
             ActiveKoTH ak = KoTHManager.getActiveKoTH(name);
             if(ak != null){
                 return KoTHUtils.formatTime(ak.getDominatingTime(), DamiXKoTH.getSettings().getSetting("time-format"));
@@ -108,6 +136,16 @@ public class KoTHPlaceholderExpansion extends PlaceholderExpansion {
         }
         else if(params.toLowerCase().startsWith("dominating_name_")){
             String name = params.replace("dominating_name_", "");
+
+            if(name.startsWith("[")){
+                int index = Integer.parseInt(name.replace("[", ""));
+                if(index < 0 || index >= KoTHManager.getActiveKoTHs().size()) return "";
+                ActiveKoTH ak = KoTHManager.getActiveKoTHs().get(index);
+                if(ak != null){
+                    return ak.getDominating() == null ? DamiXKoTH.getSettings().getSetting("nobody-placeholder") : ak.getDominating().getName();
+                }
+            }
+
             ActiveKoTH ak = KoTHManager.getActiveKoTH(name);
             if(ak != null){
                 return ak.getDominating() == null ? DamiXKoTH.getSettings().getSetting("nobody-placeholder") : ak.getDominating().getName();
