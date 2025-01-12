@@ -1,5 +1,6 @@
 package ar.com.octaviofarias.koth.utils;
 
+import ar.com.octaviofarias.koth.DamiXKoTH;
 import me.clip.placeholderapi.PlaceholderAPI;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -142,7 +143,7 @@ public class KoTHUtils {
             }
             return;
         }
-        sender.sendMessage(color(s));
+        sender.sendMessage(color(s.replace("%prefix%", DamiXKoTH.getMessages().getMessage("prefix"))));
     }
 
     public static void sendMessageWithoutPlaceholders(CommandSender sender, String s) {
@@ -155,7 +156,7 @@ public class KoTHUtils {
             }
             return;
         }
-        sender.sendMessage(color(s));
+        sender.sendMessage(color(s.replace("%prefix%", DamiXKoTH.getMessages().getMessage("prefix"))));
     }
 
     public static String formatTime(int seconds, String format) {
