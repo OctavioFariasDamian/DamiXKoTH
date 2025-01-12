@@ -17,7 +17,6 @@ public class KoTHCommand implements TabExecutor {
 
     private final List<KoTHSubCommand> subCommands = new ArrayList<>();
 
-
     public KoTHCommand(){
         subCommands.add(new CreateKoTHCommand());
         subCommands.add(new RemoveKoTHCommand());

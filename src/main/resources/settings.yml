@@ -23,5 +23,5 @@ time-format: "mm:ss"
 # Check that the time zone is in your region in this page: https://www.timeanddate.com/time/map/
 time-zone: "UTC-3"
 
-# Don't touch this!
+# DON'T TOUCH THIS
 config-version: 1

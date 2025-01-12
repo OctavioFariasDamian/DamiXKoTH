@@ -9,6 +9,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.Optional;
 
 import static ar.com.octaviofarias.koth.utils.KoTHUtils.sendMessage;
 
@@ -31,18 +32,20 @@ public class SetSecondPositionKoTHCommand implements KoTHSubCommand{
         }
         String name = args[0];
 
-        KoTH koth = KoTHManager.getKoTH(name);
-        if(koth == null){
+        Optional<KoTH> optkoth = KoTHManager.getKoTH(name);
+        if(optkoth.isEmpty()){
             sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.unknown-koth"));
             return;
         }
+
+        KoTH koth = optkoth.get();
 
         if(KoTHManager.isKoTHStarted(koth)){
             sendMessage(sender,DamiXKoTH.getMessages().getMessage("commands.setsecondposition.started").replace("%name%", name));
             return;
         }
         Block targetBlock = ((Player) sender).getTargetBlockExact(5);
-        if(!targetBlock.isCollidable()){
+        if(targetBlock == null || !targetBlock.isCollidable()){
             sendMessage(sender,DamiXKoTH.getMessages().getMessage("commands.setsecondposition.not-solid-block"));
             return;
         }

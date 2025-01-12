@@ -1,16 +1,14 @@
 package ar.com.octaviofarias.koth.configuration;
 
-import ar.com.octaviofarias.koth.utils.configuration.DamianConfig;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import org.bukkit.Location;
 import org.bukkit.plugin.Plugin;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.util.List;
 
-public class SettingsConfig extends DamianConfig {
+public class SettingsConfig extends KoTHConfiguration {
     private final Object2ObjectOpenHashMap<String, String> settingsDefault = new Object2ObjectOpenHashMap<>();
     private final Object2ObjectOpenHashMap<String, String> settings = new Object2ObjectOpenHashMap<>();
     private final Object2ObjectOpenHashMap<String, List<String>> settingsListDefault = new Object2ObjectOpenHashMap<>();

@@ -8,7 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.List;
-import java.util.Objects;
+import java.util.Optional;
 
 import static ar.com.octaviofarias.koth.utils.KoTHUtils.sendMessage;
 
@@ -31,17 +31,25 @@ public class StopKoTHCommand implements KoTHSubCommand{
         }
         String name = args[0];
 
-        KoTH koth = KoTHManager.getKoTH(name);
-        if(koth == null){
+        Optional<KoTH> optkoth = KoTHManager.getKoTH(name);
+        if(optkoth.isEmpty()){
             sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.unknown-koth"));
             return;
         }
+
+        KoTH koth = optkoth.get();
 
         if(!KoTHManager.isKoTHStarted(koth)){
             sendMessage(sender,DamiXKoTH.getMessages().getMessage("commands.stop.not-started").replace("%name%", name));
             return;
         }
-        Objects.requireNonNull(KoTHManager.getActiveKoTH(name)).cancel();
+
+        if(KoTHManager.getActiveKoTH(name).isEmpty()){
+            sendMessage(sender,DamiXKoTH.getMessages().getMessage("commands.stop.not-started").replace("%name%", name));
+            return;
+        }
+
+        KoTHManager.getActiveKoTH(name).get().stop();
         sendMessage(sender,DamiXKoTH.getMessages().getMessage("commands.stop.successfully").replace("%name%", name));
 
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {

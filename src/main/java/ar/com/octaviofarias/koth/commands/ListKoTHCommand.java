@@ -10,6 +10,7 @@ import java.util.List;
 import static ar.com.octaviofarias.koth.utils.KoTHUtils.sendMessage;
 
 public class ListKoTHCommand implements KoTHSubCommand{
+
     @Override
     public String getName() {
         return "list";

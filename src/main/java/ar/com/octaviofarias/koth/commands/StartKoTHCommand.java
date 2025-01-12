@@ -7,6 +7,7 @@ import ar.com.octaviofarias.koth.model.KoTH;
 import org.bukkit.command.CommandSender;
 
 import java.util.List;
+import java.util.Optional;
 
 import static ar.com.octaviofarias.koth.utils.KoTHUtils.sendMessage;
 
@@ -29,11 +30,13 @@ public class StartKoTHCommand implements KoTHSubCommand{
         }
         String name = args[0];
 
-        KoTH koth = KoTHManager.getKoTH(name);
-        if(koth == null){
+        Optional<KoTH> optkoth = KoTHManager.getKoTH(name);
+        if(optkoth.isEmpty()){
             sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.unknown-koth"));
             return;
         }
+
+        KoTH koth = optkoth.get();
 
         if(KoTHManager.isKoTHStarted(koth)){
             sendMessage(sender,DamiXKoTH.getMessages().getMessage("commands.start.started").replace("%name%", name));
@@ -65,18 +68,26 @@ public class StartKoTHCommand implements KoTHSubCommand{
         try{
             activeTime = Integer.parseInt(args[1]);
         }catch (NumberFormatException e){
-            sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.invalid-number"));
-            return;
+            activeTime = -1;
+            if(!args[1].equalsIgnoreCase("infinite")) {
+                sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.invalid-activetime"));
+                return;
+            }
         }
 
-        ActiveKoTH activeKoTH = new ActiveKoTH(activeTime, koth);
+        ActiveKoTH activeKoTH = new ActiveKoTH(activeTime, koth, activeTime == -1);
         activeKoTH.scheduler();
         KoTHManager.getActiveKoTHs().add(activeKoTH);
-        sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.start.successfully").replace("%name%", koth.getName()).replace("%time%", String.valueOf(activeTime)));
+        if(activeTime != -1) sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.start.successfully")
+                .replace("%name%", koth.getName())
+                .replace("%time%", String.valueOf(activeTime)));
+        else
+            sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.start.successfully2")
+                    .replace("%name%", koth.getName()));
     }
 
     @Override
     public List<String> onTabComplete(CommandSender sender, String[] args) {
-        return args.length == 1 ? KoTHManager.getKoTHs().stream().map(KoTH::getName).toList() : List.of();
+        return args.length == 1 ? KoTHManager.getKoTHs().stream().map(KoTH::getName).toList() : (args.length == 2 ? List.of("<seconds>", "infinite") : List.of());
     }
 }

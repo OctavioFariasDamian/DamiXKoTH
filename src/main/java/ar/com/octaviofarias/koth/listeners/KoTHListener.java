@@ -28,13 +28,14 @@ public class KoTHListener implements Listener {
     @EventHandler
     public void onClose(InventoryCloseEvent e){
         Player p = (Player) e.getPlayer();
+        if(e.getInventory().getHolder() == null) return;
         if(e.getInventory().getHolder() instanceof RewardsKoTHCommand.RewardsMenu){
             KoTH koTH = RewardsKoTHCommand.getEditingItemsReward().get(p);
             if(koTH == null) return;
 
             List<ItemStack> items = new ArrayList<>();
 
-            for (@Nullable ItemStack content : e.getView().getTopInventory().getContents()) {
+            for (@Nullable ItemStack content : e.getInventory().getContents()) {
                 if(content == null || content.getType() == Material.AIR) continue;
                 items.add(content);
             }

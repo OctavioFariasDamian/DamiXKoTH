@@ -5,11 +5,13 @@ import ar.com.octaviofarias.koth.KoTHManager;
 import org.apache.commons.lang3.StringUtils;
 import org.bukkit.command.CommandSender;
 
+import java.io.IOException;
 import java.util.List;
 
 import static ar.com.octaviofarias.koth.utils.KoTHUtils.sendMessage;
 
 public class CreateKoTHCommand implements KoTHSubCommand{
+
     @Override
     public String getName() {
         return "create";
@@ -32,20 +34,18 @@ public class CreateKoTHCommand implements KoTHSubCommand{
             return;
         }
 
-        if(KoTHManager.getKoTH(name) != null){
+        if(KoTHManager.getKoTH(name).isPresent()){
             sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.create.already-exists"));
             return;
         }
 
         try {
             KoTHManager.create(name);
-        }catch (RuntimeException e){
+        }catch (IOException e){
             sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.create.error"));
-            return;
+            throw new RuntimeException(e);
         }
         sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.create.successfully").replace("%name%", name));
-
-
     }
 
     @Override

@@ -3,6 +3,8 @@ package ar.com.octaviofarias.koth;
 import ar.com.octaviofarias.koth.commands.KoTHCommand;
 import ar.com.octaviofarias.koth.configuration.MessagesConfig;
 import ar.com.octaviofarias.koth.configuration.SettingsConfig;
+import ar.com.octaviofarias.koth.hook.HooksManager;
+import ar.com.octaviofarias.koth.hook.placeholderapi.KoTHPlaceholderExpansion;
 import ar.com.octaviofarias.koth.listeners.KoTHListener;
 import lombok.Getter;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -35,7 +37,7 @@ public final class DamiXKoTH extends JavaPlugin {
         }
 
         KoTHManager.loadKoTHs();
-        if(getServer().getPluginManager().getPlugin("PlaceholderAPI") != null) new KoTHPlaceholderExpansion().register();
+        HooksManager.setup();
 
         Objects.requireNonNull(getCommand("koth")).setTabCompleter(new KoTHCommand());
         Objects.requireNonNull(getCommand("koth")).setExecutor(new KoTHCommand());

@@ -14,12 +14,16 @@ import org.jetbrains.annotations.Nullable;
 
 import static ar.com.octaviofarias.koth.utils.KoTHUtils.sendMessage;
 
+/**
+ * This class manage the information and task of an active KoTH
+ */
 public class ActiveKoTH {
     @NotNull
     @Getter
     private final KoTH koTH;
+    private final boolean infinite;
     @Getter
-    private final int activeTime;
+    private final int maxTime;
     @Getter @Setter
     private int reamingTime, dominatingTime;
     @Getter @Setter
@@ -28,23 +32,30 @@ public class ActiveKoTH {
     @Nullable
     private BukkitTask task = null;
 
-    public ActiveKoTH(int activeTime, @NotNull KoTH koTH) {
-        this.activeTime = activeTime;
+    public ActiveKoTH(int maxTime, @NotNull KoTH koTH, boolean infinite) {
+        this.maxTime = maxTime;
         this.koTH = koTH;
+        this.infinite = infinite;
     }
 
+    /**
+     * This method start the scheduling task of the active KoTH
+     *
+     * <p>In the task, every second, is checked the capturer and the reaming time</p>
+     */
     public void scheduler(){
         for (Player onlinePlayer : Bukkit.getOnlinePlayers()) {
-            for (String s : DamiXKoTH.getMessages().getMessageList("koth.start")) {
+            String path = infinite ? "koth.start-infinite" : "koth.start";
+            for (String s : DamiXKoTH.getMessages().getMessageList(path)) {
                 sendMessage(onlinePlayer, s.replace("%koth%", getKoTH().getName())
-                        .replace("%duration%", String.valueOf(activeTime)));
+                        .replace("%duration%", String.valueOf(maxTime)));
             }
         }
-        reamingTime = activeTime;
+        reamingTime = maxTime;
         this.dominatingTime = koTH.getCaptureTime();
         KoTHManager.checkSchedulers();
         task = Bukkit.getScheduler().runTaskTimer(DamiXKoTH.getInstance(), () -> {
-            if(reamingTime < 0 || dominatingTime < 0) {
+            if((reamingTime < 0 && !infinite) || dominatingTime < 0) {
                 finish();
                 return;
             }
@@ -93,13 +104,16 @@ public class ActiveKoTH {
 
             }
 
-            reamingTime--;
+            if(!infinite) reamingTime--;
             if(dominating != null) dominatingTime--;
         }, 0L, 20L);
     }
 
+    /**
+     * This method finish the active KoTH giving rewards and sending finish breadcast
+     */
     private void finish() {
-        cancel();
+        stop();
         KoTHManager.checkSchedulers();
         if(dominating != null && dominatingTime < 0){
             koTH.getRewards().give(dominating);
@@ -117,7 +131,10 @@ public class ActiveKoTH {
         }
     }
 
-    public void cancel() {
+    /**
+     * This method stops the active KoTH's task and removes from the active KoTHS list
+     */
+    public void stop() {
         assert task != null;
         task.cancel();
         KoTHManager.getActiveKoTHs().remove(this);

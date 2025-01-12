@@ -5,11 +5,15 @@ import lombok.Data;
 
 import java.time.DayOfWeek;
 
+/**
+ * This class contains the information of a KoTH scheduler
+ */
 @Data
 @AllArgsConstructor
 public class KoTHScheduler {
     private DayOfWeek day;
     private int hour, minutes, seconds, duration;
+    private boolean infintie;
 
     public String getFormatedHour() {
         return hour < 10 ? "0"+hour : ""+hour;

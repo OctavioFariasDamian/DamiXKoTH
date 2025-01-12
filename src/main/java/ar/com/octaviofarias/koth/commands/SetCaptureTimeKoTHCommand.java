@@ -6,6 +6,7 @@ import ar.com.octaviofarias.koth.model.KoTH;
 import org.bukkit.command.CommandSender;
 
 import java.util.List;
+import java.util.Optional;
 
 import static ar.com.octaviofarias.koth.utils.KoTHUtils.sendMessage;
 
@@ -29,13 +30,14 @@ public class SetCaptureTimeKoTHCommand implements KoTHSubCommand{
         }
         String name = args[0];
 
-        KoTH koth = KoTHManager.getKoTH(name);
+        Optional<KoTH> optkoth = KoTHManager.getKoTH(name);
 
-        if(koth == null){
+        if(optkoth.isEmpty()){
             sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.unknown-koth"));
             return;
         }
 
+        KoTH koth = optkoth.get();
         int captureTime;
 
         try{

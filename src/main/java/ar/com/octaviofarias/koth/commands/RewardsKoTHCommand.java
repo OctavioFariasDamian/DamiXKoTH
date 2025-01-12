@@ -10,10 +10,7 @@ import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static ar.com.octaviofarias.koth.utils.KoTHUtils.sendMessage;
 import static ar.com.octaviofarias.koth.utils.KoTHUtils.sendMessageWithoutPlaceholders;
@@ -41,11 +38,13 @@ public class RewardsKoTHCommand implements KoTHSubCommand{
         }
         String name = args[0];
 
-        KoTH koth = KoTHManager.getKoTH(name);
-        if(koth == null){
+        Optional<KoTH> optkoth = KoTHManager.getKoTH(name);
+        if(optkoth.isEmpty()){
             sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.unknown-koth"));
             return;
         }
+
+        KoTH koth = optkoth.get();
 
         if(KoTHManager.isKoTHStarted(koth)){
             sendMessage(sender,DamiXKoTH.getMessages().getMessage("commands.rewards.started").replace("%name%", name));
@@ -94,7 +93,6 @@ public class RewardsKoTHCommand implements KoTHSubCommand{
 
                 sendMessageWithoutPlaceholders(sender, DamiXKoTH.getMessages().getMessage("commands.rewards.commands.add.successfully")
                         .replace("%command%", finalS).replace("%id%", String.valueOf(koth.getRewards().getCommands().size()-1)));
-                return;
             }else if(args[2].equalsIgnoreCase("remove")){
                 if(args.length != 4){
                     sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.rewards.commands.remove.usage"));
@@ -135,10 +133,10 @@ public class RewardsKoTHCommand implements KoTHSubCommand{
         else if(args.length == 2) return List.of("items", "commands");
         else if(args.length == 3 && args[1].equalsIgnoreCase("commands")) return List.of("add", "remove", "list");
         else if(args.length == 4 && args[1].equalsIgnoreCase("commands") && args[2].equalsIgnoreCase("remove")){
-            KoTH koTH = KoTHManager.getKoTH(args[1]);
-            if(koTH != null){
+            Optional<KoTH> koTH = KoTHManager.getKoTH(args[1]);
+            if(koTH.isPresent()){
                 List<String> l = new ArrayList<>();
-                for(int i = 0 ; i < koTH.getRewards().getCommands().size() ; i++) l.add(String.valueOf(i));
+                for(int i = 0; i < koTH.get().getRewards().getCommands().size() ; i++) l.add(String.valueOf(i));
                 return l;
             }
         }

@@ -4,14 +4,15 @@ import ar.com.octaviofarias.koth.DamiXKoTH;
 import ar.com.octaviofarias.koth.KoTHManager;
 import ar.com.octaviofarias.koth.model.ActiveKoTH;
 import ar.com.octaviofarias.koth.model.KoTH;
-import ar.com.octaviofarias.koth.utils.KoTHUtils;
 import org.bukkit.command.CommandSender;
 
 import java.util.List;
+import java.util.Optional;
 
 import static ar.com.octaviofarias.koth.utils.KoTHUtils.sendMessage;
 
 public class InfoKoTHCommand implements KoTHSubCommand {
+    
     @Override
     public String getName() {
         return "info";
@@ -30,11 +31,14 @@ public class InfoKoTHCommand implements KoTHSubCommand {
         }
         String name = args[0];
 
-        KoTH koth = KoTHManager.getKoTH(name);
-        if(koth == null){
+        Optional<KoTH> optionalKoTH = KoTHManager.getKoTH(name);
+        if(optionalKoTH.isEmpty()){
             sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.unknown-koth"));
             return;
         }
+        
+        KoTH koth = optionalKoTH.get();
+        
         for (String s : DamiXKoTH.getMessages().getMessageList("commands.info.header")) {
             sendMessage(sender, s
                     .replace("%name%", name)
@@ -50,13 +54,14 @@ public class InfoKoTHCommand implements KoTHSubCommand {
             }
 
         if(KoTHManager.isKoTHStarted(koth)) {
-            ActiveKoTH akoth = KoTHManager.getActiveKoTH(koth.getName());
-            for (String s : DamiXKoTH.getMessages().getMessageList("commands.info.started")) {
+            Optional<ActiveKoTH> akoth = KoTHManager.getActiveKoTH(koth.getName());
+            if(akoth.isPresent())
+                for (String s : DamiXKoTH.getMessages().getMessageList("commands.info.started")) {
                 sendMessage(sender, s
-                        .replace("%countdown%", String.valueOf(akoth.getActiveTime()))
-                        .replace("%dominatingTime%", String.valueOf(akoth.getDominatingTime()))
-                        .replace("%dominating%", akoth.getDominating() == null ? DamiXKoTH.getSettings().getSetting("nobody-placeholder") : akoth.getDominating().getName()));
-            }
+                        .replace("%countdown%", String.valueOf(akoth.get().getReamingTime()))
+                        .replace("%dominatingTime%", String.valueOf(akoth.get().getDominatingTime()))
+                        .replace("%dominating%", akoth.get().getDominating() == null ? DamiXKoTH.getSettings().getSetting("nobody-placeholder") : akoth.get().getDominating().getName()));
+                }
         }
     }
 

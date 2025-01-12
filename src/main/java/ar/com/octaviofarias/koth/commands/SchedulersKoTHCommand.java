@@ -11,6 +11,7 @@ import java.time.DayOfWeek;
 import java.time.Duration;
 import java.time.ZonedDateTime;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 import static ar.com.octaviofarias.koth.utils.KoTHUtils.sendMessage;
@@ -38,11 +39,15 @@ public class SchedulersKoTHCommand implements KoTHSubCommand{
                 sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.schedulers.list.usage"));
                 return;
             }
-            KoTH koTH = KoTHManager.getKoTH(args[1]);
-            if(koTH == null){
+            Optional<KoTH> optkoTH = KoTHManager.getKoTH(args[1]);
+
+            if(optkoTH.isEmpty()){
                 sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.unknown-koth"));
                 return;
             }
+
+            KoTH koTH = optkoTH.get();
+
             if(koTH.getSchedulers().isEmpty()){
                 sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.schedulers.list.empty"));
                 return;
@@ -64,11 +69,13 @@ public class SchedulersKoTHCommand implements KoTHSubCommand{
                 sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.schedulers.add.usage"));
                 return;
             }
-            KoTH koTH = KoTHManager.getKoTH(args[1]);
-            if(koTH == null){
+            Optional<KoTH> optkoTH = KoTHManager.getKoTH(args[1]);
+            if(optkoTH.isEmpty()){
                 sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.unknown-koth"));
                 return;
             }
+
+            KoTH koTH = optkoTH.get();
 
             DayOfWeek day;
             int hour, minute, second;
@@ -101,16 +108,20 @@ public class SchedulersKoTHCommand implements KoTHSubCommand{
             try{
                 duration = Integer.parseInt(args[4]);
             }catch (NumberFormatException e){
-                sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.invalid-number"));
-                return;
+                duration = -1;
+                if(!args[4].equalsIgnoreCase("infinite")) {
+                    sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.invalid-number"));
+                    return;
+                }
             }
-            KoTHScheduler scheduler = new KoTHScheduler(day, hour, minute, second, duration);
+            KoTHScheduler scheduler = new KoTHScheduler(day, hour, minute, second, duration, duration == -1);
             koTH.getSchedulers().add(scheduler);
             KoTHManager.update(koTH);
 
             KoTHManager.checkSchedulers();
 
-            sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.schedulers.add.successfully")
+            if(duration != -1)
+                sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.schedulers.add.successfully")
                     .replace("%name%", koTH.getName())
                     .replace("%id%", String.valueOf(koTH.getSchedulers().size()-1))
                     .replace("%day%", StringUtils.capitalize(day.name().toLowerCase()))
@@ -118,20 +129,28 @@ public class SchedulersKoTHCommand implements KoTHSubCommand{
                     .replace("%minute%", String.valueOf(scheduler.getFormatedMinutes()))
                     .replace("%second%", String.valueOf(scheduler.getFormatedSeconds()))
                     .replace("%duration%", String.valueOf(duration)));
-
+            else
+                sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.schedulers.add.successfully2")
+                        .replace("%name%", koTH.getName())
+                        .replace("%id%", String.valueOf(koTH.getSchedulers().size()-1))
+                        .replace("%day%", StringUtils.capitalize(day.name().toLowerCase()))
+                        .replace("%hour%", String.valueOf(scheduler.getFormatedHour()))
+                        .replace("%minute%", String.valueOf(scheduler.getFormatedMinutes()))
+                        .replace("%second%", String.valueOf(scheduler.getFormatedSeconds())));
         }else if(args[0].equalsIgnoreCase("remove")) {
             if(args.length < 3){
                 sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.schedulers.remove.usage"));
                 return;
             }
 
-            KoTH koth = KoTHManager.getKoTH(args[1]);
+            Optional<KoTH> optkoth = KoTHManager.getKoTH(args[1]);
 
-            if(koth == null){
+            if(optkoth.isEmpty()){
                 sendMessage(sender, DamiXKoTH.getMessages().getMessage("commands.unknown-koth"));
                 return;
             }
 
+            KoTH koth = optkoth.get();
             int index;
 
             try{
@@ -212,6 +231,7 @@ public class SchedulersKoTHCommand implements KoTHSubCommand{
     @Override
     public List<String> onTabComplete(CommandSender sender, String[] args) {
         if(args.length == 1) return List.of("add", "list", "remove", "next");
+        if(args.length == 5) return List.of("<seconds>", "infinite");
         return args.length == 2 ? KoTHManager.getKoTHs().stream().map(KoTH::getName).toList() : List.of();
     }
 }
